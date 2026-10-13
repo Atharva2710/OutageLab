@@ -1,0 +1,15 @@
+{
+  "name": "outagelab",
+  "version": "1.0.0",
+  "description": "Interactive Production Incident Simulator for SRE & DevOps Engineers",
+  "scripts": {
+    "dev:backend": "npm --prefix backend run dev",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "seed": "npm --prefix backend run seed",
+    "build:frontend": "npm --prefix frontend run build",
+    "test": "npm --prefix backend test"
+  },
+  "keywords": ["sre", "devops", "incident-response", "simulator", "mern"],
+  "author": "Atharva",
+  "license": "MIT"
+}
