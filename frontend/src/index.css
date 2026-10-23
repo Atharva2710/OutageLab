@@ -1,0 +1,263 @@
+/* OutageLab Operations Console — Design System */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+:root {
+  /* Surfaces & Canvas */
+  --bg-canvas: #07090e;
+  --bg-primary: #0a0d14;
+  --bg-surface: #0e121b;
+  --bg-panel: #121722;
+  --bg-panel-hover: #171d2b;
+  --bg-input: #090c12;
+
+  /* Borders & Grid lines */
+  --border-subtle: #192130;
+  --border-default: #222d42;
+  --border-bright: #303e5c;
+  --border-focus: #3b82f6;
+
+  /* Typography */
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #8899b2;
+  --text-inverse: #020617;
+
+  /* Operational Status Accents (Restrained & High-Legibility) */
+  --status-healthy: #10b981;
+  --status-healthy-bg: rgba(16, 185, 129, 0.12);
+  --status-healthy-border: rgba(16, 185, 129, 0.3);
+
+  --status-degraded: #f59e0b;
+  --status-degraded-bg: rgba(245, 158, 11, 0.12);
+  --status-degraded-border: rgba(245, 158, 11, 0.3);
+
+  --status-failing: #ef4444;
+  --status-failing-bg: rgba(239, 68, 68, 0.14);
+  --status-failing-border: rgba(239, 68, 68, 0.35);
+
+  --status-cyan: #06b6d4;
+  --status-cyan-bg: rgba(6, 182, 212, 0.12);
+  --status-cyan-border: rgba(6, 182, 212, 0.3);
+
+  --status-purple: #8b5cf6;
+  --status-purple-bg: rgba(139, 92, 246, 0.12);
+
+  /* Primary Action */
+  --action-primary: #2563eb;
+  --action-primary-hover: #1d4ed8;
+  --action-primary-text: #ffffff;
+
+  /* Geometry & Typography */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', Consolas, Menlo, monospace;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom Telemetry Scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-surface);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-bright);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Layout Utilities */
+.container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Operational Badges & Tags */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  font-size: 11px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.badge-easy {
+  background: var(--status-healthy-bg);
+  color: var(--status-healthy);
+  border: 1px solid var(--status-healthy-border);
+}
+
+.badge-medium {
+  background: var(--status-degraded-bg);
+  color: var(--status-degraded);
+  border: 1px solid var(--status-degraded-border);
+}
+
+.badge-hard {
+  background: var(--status-failing-bg);
+  color: var(--status-failing);
+  border: 1px solid var(--status-failing-border);
+}
+
+.badge-cyan {
+  background: var(--status-cyan-bg);
+  color: var(--status-cyan);
+  border: 1px solid var(--status-cyan-border);
+}
+
+.badge-neutral {
+  background: var(--bg-panel);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-default);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+  text-decoration: none;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 1px;
+}
+
+.btn-primary {
+  background: var(--action-primary);
+  color: var(--action-primary-text);
+  border-color: #3b82f6;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--action-primary-hover);
+  border-color: #60a5fa;
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.btn-secondary {
+  background: var(--bg-panel);
+  color: var(--text-primary);
+  border-color: var(--border-default);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--bg-panel-hover);
+  border-color: var(--border-bright);
+}
+
+.btn-danger {
+  background: rgba(239, 68, 68, 0.15);
+  color: #fca5a5;
+  border-color: var(--status-failing-border);
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: rgba(239, 68, 68, 0.25);
+  border-color: #ef4444;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* Pulse status dot */
+.pulse-indicator {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.pulse-indicator.green {
+  background: var(--status-healthy);
+  box-shadow: 0 0 6px var(--status-healthy);
+}
+
+.pulse-indicator.red {
+  background: var(--status-failing);
+  box-shadow: 0 0 8px var(--status-failing);
+  animation: pulse-ring 1.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.pulse-indicator.amber {
+  background: var(--status-degraded);
+  box-shadow: 0 0 6px var(--status-degraded);
+}
+
+@keyframes pulse-ring {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+/* Spinner */
+.spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Error banner */
+.error-banner {
+  background: var(--status-failing-bg);
+  border: 1px solid var(--status-failing-border);
+  color: #fca5a5;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+}

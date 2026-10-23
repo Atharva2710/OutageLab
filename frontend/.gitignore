@@ -1,0 +1,18 @@
+# Dependencies
+node_modules/
+
+# Production build artifacts
+dist/
+dist-ssr/
+
+# Environment files
+.env
+.env.*
+!.env.example
+*.local
+
+# System & Editor
+.DS_Store
+.vscode/
+.idea/
+*.log
