@@ -2,10 +2,12 @@ const request = require('supertest');
 const mongoose = require('mongoose');
 const app = require('../index');
 
+jest.setTimeout(30000);
+
 describe('OutageLab API Suite', () => {
   beforeAll(async () => {
     // Ensure mongoose is connected
-    if (mongoose.connection.readyState === 0) {
+    if (mongoose.connection.readyState !== 1) {
       await mongoose.connect(process.env.MONGODB_URI);
     }
   });

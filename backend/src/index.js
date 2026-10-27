@@ -11,15 +11,18 @@ const authRoute = require('./routes/auth');
 
 const app = express();
 
-// CORS
+// CORS — in production only the deployed frontend origin is allowed;
+// in development also allow local Vite dev server ports.
+const isProduction = process.env.NODE_ENV === 'production';
+
 const allowedOrigins = [
-  process.env.FRONTEND_URL || 'http://localhost:5173',
-  'http://localhost:5173',
-  'http://localhost:4173',
-];
+  process.env.FRONTEND_URL, // e.g. https://outagelab.vercel.app
+  ...(!isProduction ? ['http://localhost:5173', 'http://localhost:4173'] : []),
+].filter(Boolean);
 
 app.use(cors({
   origin: (origin, callback) => {
+    // Allow server-to-server requests (no Origin header) and listed origins
     if (!origin || allowedOrigins.includes(origin)) return callback(null, true);
     return callback(new Error('Not allowed by CORS'));
   },

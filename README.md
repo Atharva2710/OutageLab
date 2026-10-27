@@ -155,6 +155,68 @@ npm run build
 
 ---
 
+## 🌐 Production Deployment Guide
+
+OutageLab is architected for seamless multi-cloud zero-cost tier deployment:
+- **Backend API**: [Render](https://render.com) (Web Service)
+- **Frontend SPA**: [Vercel](https://vercel.com) (Static / SPA)
+- **Database**: [MongoDB Atlas](https://www.mongodb.com/atlas) (M0 Free Tier)
+
+### 1. MongoDB Atlas Setup
+1. Create a free M0 cluster in your preferred region.
+2. In **Database Access**, create a database user with `readWrite` permissions on the `outagelab` database.
+3. In **Network Access**, click **Add IP Address** and add `0.0.0.0/0` (Allow access from anywhere). This is required because Render spins up services with dynamic outbound IPs.
+4. Obtain the connection string in the format:
+   `mongodb+srv://<username>:<password>@<cluster>.mongodb.net/outagelab?retryWrites=true&w=majority`
+
+### 2. Backend Deployment (Render)
+1. Sign in to [Render](https://dashboard.render.com/) and click **New +** -> **Web Service**.
+2. Connect your GitHub repository (`Atharva2710/OutageLab`).
+3. Configure service settings:
+   - **Name**: `outagelab-backend`
+   - **Region**: Choose the region closest to your MongoDB Atlas cluster.
+   - **Branch**: `main`
+   - **Root Directory**: `backend`
+   - **Runtime**: `Node`
+   - **Build Command**: `npm install`
+   - **Start Command**: `npm start`
+4. Set Environment Variables:
+   - `NODE_ENV`: `production`
+   - `PORT`: `5000` (or leave default, Render injects `PORT`)
+   - `MONGODB_URI`: `<Your MongoDB Atlas connection string>`
+   - `JWT_SECRET`: `<A cryptographically secure random 64-character secret string>`
+   - `FRONTEND_URL`: Leave empty initially or set to your planned Vercel URL (e.g., `https://outagelab.vercel.app`). Update this once Vercel finishes deploying.
+5. In **Advanced Settings**, configure Health Check Path:
+   - **Health Check Path**: `/api/health`
+6. Click **Create Web Service**. Note the assigned URL (e.g., `https://outagelab-backend.onrender.com`).
+
+### 3. Database Seeding (Post-Deploy)
+To seed initial scenarios into MongoDB Atlas:
+- Safely run the seed script locally once pointing to Atlas:
+  ```bash
+  cd backend && npm run seed
+  ```
+  *(The seed script is idempotent; it upserts scenarios by `scenarioId` and does NOT drop collections or delete user runs).*
+
+### 4. Frontend Deployment (Vercel)
+1. Sign in to [Vercel](https://vercel.com/) and click **Add New...** -> **Project**.
+2. Import the GitHub repository (`Atharva2710/OutageLab`).
+3. Configure project settings:
+   - **Framework Preset**: `Vite`
+   - **Root Directory**: Click Edit and select `frontend`
+   - **Build Command**: `npm run build`
+   - **Output Directory**: `dist`
+4. Set Environment Variables:
+   - `VITE_API_URL`: `https://your-backend-name.onrender.com` (Backend URL from Render without trailing slash)
+5. Click **Deploy**. Note the assigned Vercel URL (e.g., `https://outagelab.vercel.app`).
+
+### 5. Final CORS Handshake
+1. Return to the Render dashboard for `outagelab-backend`.
+2. Update the `FRONTEND_URL` environment variable to the exact Vercel URL (e.g., `https://outagelab.vercel.app`).
+3. Trigger a redeploy (or wait for automatic restart) so CORS and authentication cookies are accepted.
+
+---
+
 ## 🎮 Incident Scenarios Catalog
 
 1. **Bad Deployment (`SEV-3` · Moderate Incident)**:
