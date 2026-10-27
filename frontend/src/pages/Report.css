@@ -1,0 +1,223 @@
+/* Postmortem Retrospective Report — Operations Console */
+
+.report-page {
+  min-height: 100vh;
+  background: var(--bg-canvas);
+  color: var(--text-primary);
+  display: flex;
+  flex-direction: column;
+}
+
+.report-container {
+  max-width: 960px;
+  margin: 36px auto 60px;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* Hero Scorecard */
+.postmortem-hero-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.postmortem-hero-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 200px;
+  height: 100%;
+  background: radial-gradient(circle at 100% 50%, rgba(16, 185, 129, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.postmortem-hero-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.postmortem-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.postmortem-title {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: var(--text-primary);
+}
+
+.postmortem-desc {
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* Score rating stamp */
+.rating-stamp-card {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-bright);
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  min-width: 170px;
+}
+
+.rating-badge-large {
+  font-family: var(--font-mono);
+  font-size: 52px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.rating-badge-large.grade-s { color: #8b5cf6; text-shadow: 0 0 15px rgba(139, 92, 246, 0.4); }
+.rating-badge-large.grade-a { color: #10b981; text-shadow: 0 0 15px rgba(16, 185, 129, 0.4); }
+.rating-badge-large.grade-b { color: #38bdf8; text-shadow: 0 0 15px rgba(56, 189, 248, 0.4); }
+.rating-badge-large.grade-c { color: #f59e0b; text-shadow: 0 0 15px rgba(245, 158, 11, 0.4); }
+.rating-badge-large.grade-f { color: #ef4444; text-shadow: 0 0 15px rgba(239, 68, 68, 0.4); }
+
+.rating-title-txt {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-top: 6px;
+}
+
+/* Metric KPI strip */
+.report-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+@media (max-width: 768px) {
+  .report-kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.report-kpi-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.report-kpi-label {
+  font-size: 11px;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.report-kpi-val {
+  font-family: var(--font-mono);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* Report Sections */
+.report-doc-section {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.doc-section-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 12px;
+}
+
+.doc-section-body {
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+.rca-callout-box {
+  background: rgba(239, 68, 68, 0.08);
+  border-left: 3px solid var(--status-failing);
+  padding: 14px 18px;
+  border-radius: var(--radius-sm);
+  font-size: 13.5px;
+  color: #fca5a5;
+  line-height: 1.6;
+}
+
+.resolution-callout-box {
+  background: rgba(16, 185, 129, 0.08);
+  border-left: 3px solid var(--status-healthy);
+  padding: 14px 18px;
+  border-radius: var(--radius-sm);
+  font-size: 13.5px;
+  color: #a7f3d0;
+  line-height: 1.6;
+}
+
+/* Action Audit Table in Report */
+.report-action-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+}
+
+.report-action-table th {
+  text-align: left;
+  padding: 10px 14px;
+  background: var(--bg-panel);
+  border-bottom: 1px solid var(--border-default);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.report-action-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+}
+
+/* Bottom Actions */
+.report-bottom-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  gap: 14px;
+  flex-wrap: wrap;
+}
